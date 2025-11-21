@@ -53,9 +53,8 @@ func swagger(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Printf("Error reading swagger.json: %v", err)
 		log.Println("Loading default swagger from filesystem")
+		swaggerJSON, err = ioutil.ReadFile("./swagger.json")
 	}
-	swaggerJSON, err = ioutil.ReadFile("./swagger.json")
-	w.Header().Set("Content-Type", "application/json")
 	w.Write(swaggerJSON)
 }
 
@@ -152,7 +151,7 @@ func main() {
 	http.HandleFunc("/", echo)
 	http.HandleFunc(swaggerEndpoint, swagger)
 
-	log.Println("Version 0.4.0")
+	log.Println("Version 0.5.0")
 
 	errs := Run(httpPort)
 
