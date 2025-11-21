@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  annotations:
+    gloo.solo.io/scrape-openapi-pull-attempts: "3"
+    gloo.solo.io/scrape-openapi-retry-delay: 30s
+    gloo.solo.io/scrape-openapi-source: /swagger.json
+    gloo.solo.io/scrape-openapi-use-backoff: "true"
+  name: http-swagger-server
+spec:
+  type: ClusterIP
+  selector:
+    app: http-swagger-server
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 8080

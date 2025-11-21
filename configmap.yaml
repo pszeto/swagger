@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: swagger-config
+data:
+  swagger.json: |
+    {
+      "swagger": "2.0",
+      "info": {
+        "title": "My API",
+        "version": "1.0.0"
+      },
+      "paths": {
+        "/hello": {
+          "get": {
+            "summary": "Says hello",
+            "responses": {
+              "200": {
+                "description": "A greeting"
+              }
+            }
+          }
+        }
+      }
+    }

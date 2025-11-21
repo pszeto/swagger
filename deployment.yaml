@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-swagger-server
+  labels:
+    app: http-swagger-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: http-swagger-server
+  template:
+    metadata:
+      labels:
+        app: http-swagger-server
+    spec:
+      volumes:
+        - name: swagger-volume
+          configMap:
+            name: swagger-config
+      containers:
+      - name: http-swagger-server
+        image: docker.io/pszeto/http-swagger-server:latest
+        imagePullPolicy: Always
+        env:
+        - name: HTTP_PORT
+          value: "8080"
+        - name: SWAGGER_ENDPOINT
+          value: "/swagger.json"       
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+          - name: swagger-volume
+            mountPath: "/config" # Mount point inside the container
+            readOnly: true
